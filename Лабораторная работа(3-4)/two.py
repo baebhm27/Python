@@ -1,3 +1,4 @@
+
 class Human():
     def __init__(self, surname, name, second_name, age=0, sex="Ж"):
         self.surname = surname.title()
@@ -14,12 +15,14 @@ class Human():
         pass
 
     def get_full_info(self):
-        print(f"Фамилия: {self.surname}")
-        print(f"Имя: {self.name}")
-        print(f"Отчество: {self.second_name}")
-        print(f"Возраст: {self.age}")
-        print(f"Пол: {self.sex}")
-        pass
+        tmp = [
+            f"Фамилия: {self.surname}",
+            f"Имя: {self.name}",
+            f"Отчество: {self.second_name}",
+            f"Возраст: {self.age}",
+            f"Пол: {self.sex}"
+        ]
+        return "\n".join(tmp)
 
 
 class Student(Human):
@@ -29,27 +32,22 @@ class Student(Human):
         pass
 
     # use mode "return" to get the string
-    def get_full_info(self, mode="print"):
-        if mode == "print":
-            sep = "\n"
-        elif mode == "return":
-            sep = ", "
+    def get_full_info(self, mode=False):
+        orig = super().get_full_info()
+        tmp = [
+            f"Группа: {self.group}"
+        ]
 
-        info = f"Фамилия: {self.surname}" + sep + f"Имя: {self.name}" + sep + f"Отчество: {self.second_name}" + \
-            sep + f"Возраст: {self.age}" + sep + \
-            f"Пол: {self.sex}" + sep + f"Группа: {self.group}"
-
-        if mode == "print":
-            print(info)
-        elif mode == "return":
-            return info
+        if mode:
+            tmp = orig.split("\n") + tmp
+            return ", ".join(tmp)
+        else:
+            tmp.insert(0, orig)
+            return "\n".join(tmp)
 
 
 if __name__ == "__main__":
-    #dude = Human("Муравьева", "Анастасия", "Алексеевна", 20)
-    # dude.get_fio()
-    # dude.get_full_info()
-
-    man = Student("kkkkkk", "aaaa", "bbbbbbb", 18, "m", "AD-12")
-    man.get_full_info("print")
-    # print(man.get_full_info("return"))
+    student = Student("Муравьёва", "Анастасия",
+                      "Алексеевна", 20, "Ж", "ИСТД-31")
+    print(student.get_full_info(1))
+    print(student.get_full_info())
