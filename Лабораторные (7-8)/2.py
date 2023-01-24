@@ -15,73 +15,73 @@
 # населения.
 
 
-импортировать  json
-импорт  csv
+импорт json
+импорт csv
 
 
-Городской  класс:
-    __init__ def(self, индекс, region_type, регион, название, население):
-        self.name = имя
+класс Город:
+    def __init__(self, Указатель, region_type, регион, Имя, население):
+        self.Имя = Имя
 
         попробуйте:
-            self.population = int(население)
+            self.население = int(население)
         Ошибка  значения, за исключением:
-            самонаселение = 0
+            self.population = 0
 
         self.region = регион
         self.index = int(индекс)
         self.region_type = region_type
 
     __eq__ def(сам, другой):
-        self return.index == other.index
+        self  return.index == другое.индекс
 
     __hash__ def(self):
-        самовывоз .индекс
+        самовосстановление . индекс
 
-    печать  определения (self):
+    печать  def(self):
         печать ("имя", self.name )
-        печать ("население", self.population)
+        print("население", self.население)
         печать ("регион", self.region)
         печать ("индекс", self.index)
-        печать ("region_type", self.region_type)
-        пройти
+        печать("region_type", self.region_type)
+        пропуск
 
 # -----------------------------------------------------------------
 
 
-get_files_data def():
-    set = cities_set()
+get_files_data  определение():
+    set = cities_set() установить=cities_set()
 
     открыть  с помощью ('Города.json', "r", encoding='utf-8') как  json_infile:
         json = cities.load(json_infile)
         города  в  городе  для ['data']:
-            cities_set.добавить(Город(
+            cities_set.add(City(
                 city["Индекс"], city["Тип региона"], city["Регион"], city["Город"], city["Население"]))
     json_infile.close()
 
-    открыть  с помощью ("Города.csv", encoding='utf-8') как  csv_infile:
-        csv = file_reader.reader(csv_infile, разделитель =",")
-        количество  =  0
-        file_reader  в  строке  для:
-            0 >  считать , если:
-                cities_set.добавить(
-                    Город (строка [0], строка [1], строка [2], строка [3], строка [4]))
-            количество  += 1
+    with open("Города.csv", encoding='utf-8') as csv_infile:
+        file_reader = csv.reader(csv_infile, delimiter=",")
+        count = 0
+        for row in file_reader:
+            if count > 0:
+                cities_set.add(
+                    City(row[0], row[1], row[2], row[3], row[4]))
+            count += 1
     csv_infile.close()
 
-    возврат  замороженного набора (cities_set)
+    return frozenset(cities_set)
 
 # -----------------------------------------------------------------
 
 
-sort_key  определение (ы):
-    s  return.население
+def sort_key(s):
+    return s.population
 
 
 # -----------------------------------------------------------------
 
-set_json_data  определение (cities_list_sorted):
-    = данные {}
+def set_json_data(cities_list_sorted):
+    data = {}
     данные['города'] = []
 
     cities_list_sorted  в  городе  для:
@@ -104,7 +104,7 @@ set_json_data  определение (cities_list_sorted):
 set_csv_data  определение (cities_list_sorted):
     открыть  с помощью ("Cities.csv", mode="w", encoding='utf-8') как  csv_outфайл:
         csv = file_writer.writer(
-            csv_outfile, разделитель =",", lineterminator="\r")
+            csv_outfile, разделитель=",", определитель строки="\r")
 
         file_writer.writerow(
  ["Индекс", "Тип региона", "Регион", "Город", "Население"])
@@ -126,7 +126,7 @@ set_csv_data  определение (cities_list_sorted):
     сортировка = cities_list_sorted(cities_frosenset, ключ=sort_key)
 
     # Создаёт файл json с отсортированным списком городов
-    set_json_data(список городов, отсортированных)
+    set_json_data(cities_list_sorted)
 
     # Создаёт файл csv с отсортированным списком городов
-    set_csv_data(список городов, 
+    set_csv_data(cities_list_sorted
