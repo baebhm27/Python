@@ -1,0 +1,8 @@
+{% for city in cities %}
+  <h2>{{city.name}}</h2>
+  <p>Население: {{city.population}}</p>
+  <p>Регион: {{city.region}}</p>
+  <p>Индекс: {{city.index}}</p>
+  <p>Тип региона: {{city.region_type}}</p>
+  <br>
+{% endfor %}
